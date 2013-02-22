@@ -82,3 +82,24 @@ v                   open in vertical split.
 gv                  open in vertical split silently.
 
 q                   close the quickfix window.
+
+==============================================================================
+OPTIONS                                                         *ack-options*
+
+The following options are available:
+
+                                               *g:ack_use_mdfind*
+  |g:ack_use_mdfind|                             boolean (default: 0)
+
+      If this setting is true, Ack.vim will search the current directory for the
+      supplied string using OS X's mdfind tool, which uses the same database as
+      Spotlight. Note that mdfind does not have most of ack's functionality, so
+      you'll need to disable this to perform more sophisticated searches.  Use
+      of mdfind will automatically be disabled if you provide a file or
+      directory argument to ack, so you can disable it on an individual query
+      simply by using a command like:
+
+        :Ack my_query .
+
+      This will also be necessary to use ack in directories not indexed by
+      Spotlight.

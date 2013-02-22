@@ -27,6 +27,10 @@ if !exists("g:ack_lhandler")
   let g:ack_lhandler="botright lopen"
 endif
 
+if !exists("g:ack_use_mdfind")
+  let g:ack_use_mdfind=0
+endif
+
 function! s:Ack(cmd, args)
   redraw
   echo "Searching ..."
@@ -36,6 +40,13 @@ function! s:Ack(cmd, args)
     let l:grepargs = expand("<cword>")
   else
     let l:grepargs = a:args . join(a:000, ' ')
+    if exists("g:ack_use_mdfind") && g:ack_use_mdfind == '1'
+      " Only use mdfind if there are no file arguments
+      let l:args = split(l:grepargs, '[^\\] ')
+      if empty(l:args[1:])
+        let l:grepargs = l:grepargs . ' `mdfind -onlyin . "' . l:args[0] . '"`'
+      endif
+    endif
   end
 
   " Format, used to manage column jump
